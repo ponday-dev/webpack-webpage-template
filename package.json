@@ -1,13 +1,17 @@
 {
-  "name": "image-search-lowya-front",
+  "name": "webpack-webpage-template",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "clean": "rimraf public",
+    "lint:js": "eslint --fix src/js",
+    "format:style": "prettier-stylelint --fix src/style --quiet --write src/style/**/*",
+    "format:html": "prettier src/index.html",
+    "lint": "npm-run-all lint:* format:*",
     "start": "webpack-dev-server --mode development --open",
-    "webpack:dev": "webpack --mode development --env.autoprefixer=enable",
-    "webpack:prod": "webpack --mode production --env.autoprefixer=enable",
+    "webpack:dev": "webpack --mode development",
+    "webpack:prod": "webpack --mode production",
     "build:dev": "npm-run-all clean webpack:dev",
     "build:prod": "npm-run-all clean webpack:prod",
     "build": "npm run build:prod"
@@ -22,18 +26,33 @@
     "babel-loader": "^8.0.6",
     "copy-webpack-plugin": "^5.0.4",
     "css-loader": "^3.2.0",
+    "eslint": "^6.5.1",
+    "eslint-plugin-prettier": "^3.1.1",
+    "file-loader": "^4.2.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.8.0",
     "npm-run-all": "^4.1.5",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-loader": "^3.0.0",
+    "prettier": "^1.18.2",
+    "prettier-stylelint": "^0.4.2",
     "rimraf": "^3.0.0",
     "sass": "^1.22.12",
     "sass-loader": "^8.0.0",
+    "stylelint": "^11.0.0",
+    "stylelint-config-prettier": "^6.0.0",
+    "stylelint-config-standard": "^19.0.0",
+    "stylelint-scss": "^3.11.1",
     "terser-webpack-plugin": "^2.1.2",
     "webpack": "^4.41.0",
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.8.1"
-  }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "dependencies": {}
 }

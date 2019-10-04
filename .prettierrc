@@ -1,0 +1,25 @@
+{
+  "printWidth": 120,
+  "trailingComma": "es5",
+  "tabWidth": 4,
+  "semi": true,
+  "singleQuote": true,
+  "bracketSpacing": true,
+  "overrides": [
+    {
+      "files": [
+        "src/**/*.html",
+        "src/**/*.css",
+        "src/**/*.scss",
+        ".babelrc",
+        ".prettierrc",
+        ".eslintrc.json",
+        ".stylelintrc.json",
+        "package.json"
+      ],
+      "options": {
+        "tabWidth": 2
+      }
+    }
+  ]
+}
