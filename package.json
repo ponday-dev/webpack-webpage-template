@@ -6,9 +6,10 @@
   "scripts": {
     "clean": "rimraf public",
     "lint:js": "eslint --fix src/js",
+    "lint:style": "stylelint --quiet \"src/style/**/*.css\" \"src/style/**/*.scss\"",
     "format:style": "prettier-stylelint --fix src/style --quiet --write src/style/**/*",
-    "format:html": "prettier src/index.html",
-    "lint": "npm-run-all lint:* format:*",
+    "format:html": "prettier --write src/index.html",
+    "lint": "npm-run-all format:* lint:*",
     "start": "webpack-dev-server --mode development --open",
     "webpack:dev": "webpack --mode development",
     "webpack:prod": "webpack --mode production",

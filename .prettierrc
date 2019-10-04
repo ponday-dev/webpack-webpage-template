@@ -11,6 +11,7 @@
         "src/**/*.html",
         "src/**/*.css",
         "src/**/*.scss",
+        "webpack.config.js",
         ".babelrc",
         ".prettierrc",
         ".eslintrc.json",
