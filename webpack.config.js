@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -7,8 +8,28 @@ const TerserWebpackPlugin = require('terser-webpack-plugin');
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
 
 const srcDir = path.resolve(__dirname, 'src');
-const staticDir = path.resolve(__dirname, 'static');
+const pagesDir = path.resolve(srcDir, 'pages');
+const assetsDir = path.resolve(__dirname, 'assets');
 const publicDir = path.resolve(__dirname, 'public');
+
+const pages = fs
+  .readdirSync(pagesDir, { withFileTypes: true })
+  .filter((dirInfo) => dirInfo.isDirectory())
+  .map(({ name }) => name);
+const entries = pages.reduce((acc, key) => {
+  return {
+    ...acc,
+    [key]: path.resolve(pagesDir, key, 'index.js'),
+  };
+}, {});
+const htmlPlugins = pages.map((key) => {
+  return new HtmlWebpackPlugin({
+    template: path.resolve(pagesDir, key, 'index.html'),
+    filename: `${key}.html`,
+    inject: 'body',
+    chunks: [key],
+  });
+});
 
 module.exports = (_, argv) => {
   const isProd = argv.mode === 'production';
@@ -16,7 +37,8 @@ module.exports = (_, argv) => {
 
   return {
     entry: {
-      app: path.resolve(srcDir, 'js', 'index.js'),
+      ...entries,
+      app: path.resolve(srcDir, 'index.js'),
     },
     output: {
       filename: '[name]-[hash].js',
@@ -92,11 +114,14 @@ module.exports = (_, argv) => {
         template: path.join(srcDir, 'index.html'),
         filename: 'index.html',
       }),
+      ...htmlPlugins,
       new MiniCssExtractWebpackPlugin({
         filename: 'style-[hash].css',
       }),
       new CopyWebpackPlugin({
-        patterns: [{ from: staticDir, to: publicDir, globOptions: { dot: false, gitignore: false } }],
+        patterns: [
+          { from: assetsDir, to: publicDir, globOptions: { dot: false, gitignore: false }, noErrorOnMissing: true },
+        ],
       }),
     ],
     devServer: {
