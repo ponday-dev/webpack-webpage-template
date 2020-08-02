@@ -1,0 +1,9 @@
+version: 1
+update_configs:
+  - package_manageer: javascript
+    directory: /
+    update_schedule: weekly
+    automerged_updates:
+      - match:
+          dependency_types: all
+          update_type: sember:minor

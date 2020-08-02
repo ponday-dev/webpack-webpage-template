@@ -16,6 +16,7 @@
         ".prettierrc",
         ".eslintrc.json",
         ".stylelintrc.json",
+        ".dependabot/config.yml",
         "package.json"
       ],
       "options": {
