@@ -89,6 +89,9 @@ module.exports = (_, argv) => {
               options: {
                 implementation: require('sass'),
                 sourceMap: !isProd,
+                sassOptions: {
+                  includePaths: [path.resolve(srcDir, 'styles')],
+                },
               },
             },
           ],
