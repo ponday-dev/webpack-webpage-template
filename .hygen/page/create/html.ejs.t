@@ -1,3 +1,6 @@
+---
+to: src/pages/<%= name %>/index.html
+---
 <!DOCTYPE html>
 <html lang="ja">
   <head>
@@ -7,6 +10,5 @@
     <title>Webpack Template</title>
   </head>
   <body>
-    <h1>Webpack Template</h1>
   </body>
 </html>
