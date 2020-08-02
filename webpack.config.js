@@ -95,7 +95,9 @@ module.exports = (_, argv) => {
       new MiniCssExtractWebpackPlugin({
         filename: 'style-[hash].css',
       }),
-      new CopyWebpackPlugin([{ from: staticDir, to: publicDir, ignore: ['.gitkeep'] }]),
+      new CopyWebpackPlugin({
+        patterns: [{ from: staticDir, to: publicDir, globOptions: { dot: false, gitignore: false } }],
+      }),
     ],
     devServer: {
       hot: true,
