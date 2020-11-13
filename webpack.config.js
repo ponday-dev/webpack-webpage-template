@@ -43,6 +43,8 @@ module.exports = (_, argv) => {
     output: {
       filename: '[name]-[hash].js',
       path: path.join(publicDir),
+      publicPath: '',
+      assetModuleFilename: 'public/[hash][ext]',
     },
     optimization: {
       splitChunks: {
@@ -80,8 +82,10 @@ module.exports = (_, argv) => {
             {
               loader: 'postcss-loader',
               options: {
-                sourceMap: !isProd,
-                plugins: postCssPlugins,
+                postcssOptions: {
+                  sourceMap: !isProd,
+                  plugins: postCssPlugins,
+                },
               },
             },
             {
@@ -98,17 +102,12 @@ module.exports = (_, argv) => {
         },
         {
           test: /\.(svg|jpg|png|gif)$/,
-          exclude: /node_modules/,
-          use: [
-            {
-              loader: 'file-loader',
-              options: {
-                name: '[name].[ext]',
-                outputPath: 'images/',
-                path: path.resolve(publicDir, 'images'),
-              },
+          type: 'asset',
+          parser: {
+            dataUrlCondition: {
+              maxSize: 4 * 1024,
             },
-          ],
+          },
         },
       ],
     },
@@ -130,6 +129,7 @@ module.exports = (_, argv) => {
     devServer: {
       hot: true,
       inline: true,
+      open: true,
       contentBase: publicDir,
       port: 8000,
     },
